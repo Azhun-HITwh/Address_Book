@@ -6,9 +6,43 @@
 //
 
 #include <stdio.h>
+#include "address_book.h"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, World!\n");
-    return 0;
+    
+    AddressBook address_book;
+    
+    typedef void (*Func)(AddressBook*);
+    Func func_table[] = {
+        DestoryBook,
+        AddPersonInfo,
+        DelPersonInfo,
+        FindPersonInfo,
+        ModifyPersonInfo,
+        PrintPersonInfo,
+        ClearPersonInfo,
+        SortPersonInfo,
+    };
+    
+    InitBook(&address_book);
+        
+
+    while (1) {
+        system("clear");
+        int choice = Menu();
+
+        if (choice < 0 || choice > 7) {
+            printf("输入错误！\n");
+            continue;
+        }
+
+        func_table[choice](&address_book);
+
+        if (choice == 0) {
+            printf("\n 再见！\n");
+            break;
+        }
+    }
+    
+return 0;
 }
