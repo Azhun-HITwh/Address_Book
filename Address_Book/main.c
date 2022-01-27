@@ -28,7 +28,7 @@ int main(int argc, const char * argv[]) {
         
 
     while (1) {
-        system("clear");
+//        system("clear");
         int choice = Menu();
 
         if (choice < 0 || choice > 7) {

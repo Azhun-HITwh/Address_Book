@@ -23,7 +23,7 @@ PRIVATE int FindName(AddressBook *address_book, char search_name[100]){
 
 PRIVATE void ReallocBook(AddressBook *address_book){
     
-    int newSize = address_book->capacity == 0 ? 1 : 2 * address_book->capacity;
+    int newSize = (address_book->capacity == 0 ? 1 : 2 * address_book->capacity);
     
     PersonInfo *newAddress = realloc(address_book->all_address, newSize * sizeof(PersonInfo));
     if (!newAddress) {
@@ -68,7 +68,7 @@ PRIVATE void LoadBook(AddressBook *address_book){
 
 PRIVATE void SaveBook(AddressBook *address_book){
     
-    FILE *fp = fopen("address.txt", "w");
+    FILE *fp = fopen("address_book.txt", "w");
     
     if (fp == NULL) {
         strerror(errno);
@@ -158,6 +158,7 @@ void DelPersonInfo(AddressBook *address_book){
         name_exist = FindName(address_book, search_name);
     }
     printf("删除成功！\n");
+    return;
         
 //    system("pause");
     
@@ -168,7 +169,7 @@ void FindPersonInfo(AddressBook* address_book) {
     char search_name[100] = { 0 };
 
     //搜索人的方式也很多，我们这里用搜索名字的方法
-    printf("更新联系人\n");
+    printf("搜索联系人\n");
     printf("请输入人名：");
     scanf("%s", search_name);
 
@@ -179,6 +180,7 @@ void FindPersonInfo(AddressBook* address_book) {
         }
     }
     
+    return;
 //    system("pause");
 }
 
@@ -211,6 +213,7 @@ void ModifyPersonInfo(AddressBook* address_book) {
     }
 
     printf("更新成功！\n");
+    return;
 //    system("pause");
 }
 
@@ -230,7 +233,8 @@ void PrintPersonInfo(AddressBook* address_book) {
         info = &address_book->all_address[i];
         printf("[%03d]%4s  %s\n", i, info->name, info->phone);
     }
-
+    
+    return;
 //    system("pause");
 }
 
@@ -243,17 +247,18 @@ void ClearPersonInfo(AddressBook* address_book) {
     if(is_continue == 0) {
         address_book->size = 0;
         printf("清除完成！\n");
-        system("pause");
+//        system("pause");
     }
     printf("已取消！\n");
     
-    system("pause");
+    return;
+//    system("pause");
 }
 
 void SortPersonInfo(AddressBook* address_book) {
 
     printf("排序通讯录\n");
-
+    // 冒泡排序
     for (int i = 0; i < address_book->size - 1; i++) {
         for (int j = 0; j < address_book->size - 1 - i; j++) {
             PersonInfo* info = &address_book->all_address[j];
@@ -268,7 +273,8 @@ void SortPersonInfo(AddressBook* address_book) {
     }
     printf("排序成功！\n");
 
-    system("pause");
+    return;
+//    system("pause");
 }
 
 void DestoryBook(AddressBook* address_book) {
@@ -277,5 +283,10 @@ void DestoryBook(AddressBook* address_book) {
 
     free(address_book->all_address);
     address_book->all_address = NULL;
+    /*赋值运算的运算顺序是自右向左
+      所以a=b=0相当于a=(b=0)
+     */
     address_book->capacity = address_book->size = 0;
+    
+    return;
 }
