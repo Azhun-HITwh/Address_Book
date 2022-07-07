@@ -1,0 +1,51 @@
+variables{
+    message 0x21 msg1 = {dlc=8};
+    msTimer timer1;
+    byte DataArray[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,}; 
+}
+
+on start
+{
+    setTimer(timer1,50);
+}
+
+on timer timer1{
+    int i;
+    int count =0;
+    byte checksum = 0x00;
+    msg1.can =1;
+    msg1.FDF =1;
+
+    msg1.byte(0) = 0x20;
+    msg1.byte(1) = 0x00;
+    msg1.byte(2) = 0x00;
+    msg1.byte(3) = 0x00;
+    msg1.byte(4) = 0x00;
+    msg1.byte(5) = 0x00;
+    msg1.byte(6) = 0x00;
+    msg1.byte(7) = 0x00;
+
+    msg1.byte(1) = CheckSumCal();
+    output(msg1);
+}
+
+on message 0x021{
+    this.Byte(1) = 0x00;
+}
+
+byte CRC(byte msg[], int len){
+    byte crc;
+    int byte_index;
+    int bit_index;
+    int change_index;
+    crc = 0x00;
+    for(byte_index=0; byte_index<len;byte_index++){
+        // CRC algro.
+    }
+}
+
+byte CheckSumCal(){
+    byte checksumval;
+    checksumval = CRC(msg, 8);
+    return checksumval;
+}
